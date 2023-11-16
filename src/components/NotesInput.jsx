@@ -7,12 +7,13 @@ class NotesInput extends React.Component {
         this.state = {
             title: '',
             body: '',
-            createAt: +new Date,
+            createdAt: '',
             archived: ''
         }
 
         this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
         this.onBodyChangeEventHandler = this.onBodyChangeEventHandler.bind(this);
+        this.onDateChangeEventHandler = this.onDateChangeEventHandler.bind(this)
         this.onSubmitEventHandler = this.onSubmitEventHandler.bind(this);
     }
 
@@ -32,6 +33,14 @@ class NotesInput extends React.Component {
         });
     }
 
+    onDateChangeEventHandler(event) {
+        this.setState(() => {
+            return {
+                date: event.target.value,
+            }
+        });
+    }
+
     onSubmitEventHandler(event) {
         event.preventDefault();
         this.props.addNotes(this.state);
@@ -40,9 +49,10 @@ class NotesInput extends React.Component {
     render() {
         return (
             <form className='note-input' onSubmit={this.onSubmitEventHandler}>
-                <input className="note-input__title" type="text" placeholder="Title" value={this.state.title} onChange={this.onTitleChangeEventHandler} />
-                <textarea className="note-input__body" placeholder="Descripsion" value={this.state.body} onChange={this.onBodyChangeEventHandler} />
-                <button type="submit">Add</button>
+                <input className="note-input__title" type="text" placeholder="Judul" value={this.state.title} onChange={this.onTitleChangeEventHandler} />
+                <textarea className="note-input__body" placeholder="Deskripsi" value={this.state.body.substring(0,150)} onChange={this.onBodyChangeEventHandler} />
+                <p value={this.state.createdAt} onChange={this.onDateChangeEventHandler} />
+                <button className="btn-add" type="submit">Tambah Note</button>
             </form>
         )
     }

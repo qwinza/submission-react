@@ -2,13 +2,14 @@ import React from "react";
 import NotesInput from './NotesInput';
 import NotesList from './NotesList';
 
-import { getInitialData } from '../utils/index';
+import { getInitialData, showFormattedDate } from '../utils/index';
 
 class NotesApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            notes: getInitialData()
+            notes: getInitialData(),
+            Date: showFormattedDate()
         }
 
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
@@ -20,7 +21,7 @@ class NotesApp extends React.Component {
         this.setState({ notes });
     }
 
-    onAddNotesHandler({ title, body, createAt, archived }) {
+    onAddNotesHandler({ title, body }) {
         this.setState((prevState) => {
             return {
                 notes: [
@@ -29,7 +30,8 @@ class NotesApp extends React.Component {
                         id: +new Date(),
                         title,
                         body,
-                        createAt,
+                        archived: false,
+                        createdAt: new Date().toISOString()
                     }
                 ]
             }
